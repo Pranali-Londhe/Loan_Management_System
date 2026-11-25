@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Loan Approval &amp; Disbursement Queue</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<main class="container">
+    <div class="page-header">
+        <h1>Loan Approval &amp; Disbursement Queue</h1>
+    </div>
+
+    <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+
+    <h2 style="margin-bottom: 0.75rem;">Pending Applications</h2>
+    <div class="table-wrap" style="margin-bottom: 2rem;">
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Borrower</th>
+                <th>Principal</th>
+                <th>Rate (%)</th>
+                <th>Tenure</th>
+                <th>EMI</th>
+                <th>Purpose</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="loan : ${pendingLoans}">
+                <td th:text="${loan.id}">1</td>
+                <td th:text="${loan.borrower.email}">user@example.com</td>
+                <td th:text="${loan.principalAmount}">10000.00</td>
+                <td th:text="${loan.annualInterestRate}">10.50</td>
+                <td th:text="${loan.tenureMonths} + ' mo'">12 mo</td>
+                <td th:text="${loan.monthlyEmi}">881.49</td>
+                <td th:text="${loan.purpose}">Purpose</td>
+                <td style="display: flex; gap: 0.4rem;">
+                    <form th:action="@{/admin/loans/{id}/approve(id=${loan.id})}" method="post">
+                        <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                    </form>
+                    <form th:action="@{/admin/loans/{id}/reject(id=${loan.id})}" method="post">
+                        <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+                    </form>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(pendingLoans)}">
+                <td colspan="8" style="text-align: center; color: #64748b;">No pending loans to review.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2 style="margin-bottom: 0.75rem;">Approved Loans Awaiting Disbursement</h2>
+    <div class="table-wrap">
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Borrower</th>
+                <th>Principal</th>
+                <th>Total Payable</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="loan : ${approvedLoans}">
+                <td th:text="${loan.id}">1</td>
+                <td th:text="${loan.borrower.email}">user@example.com</td>
+                <td th:text="${loan.principalAmount}">10000.00</td>
+                <td th:text="${loan.totalPayable}">10577.88</td>
+                <td>
+                    <form th:action="@{/admin/loans/{id}/disburse(id=${loan.id})}" method="post">
+                        <button type="submit" class="btn btn-sm">Disburse</button>
+                    </form>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(approvedLoans)}">
+                <td colspan="5" style="text-align: center; color: #64748b;">No approved loans waiting for disbursement.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

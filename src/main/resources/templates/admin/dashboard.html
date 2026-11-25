@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<main class="container">
+    <div class="page-header">
+        <h1>Admin Dashboard</h1>
+        <a th:href="@{/admin/loans/pending}" class="btn">Manage Loan Queue</a>
+    </div>
+
+    <div class="grid-cards">
+        <div class="card">
+            <h3>Total Principal Lent</h3>
+            <div class="stat-value" th:text="${summary.totalLent}">0.00</div>
+        </div>
+        <div class="card">
+            <h3>Pending Approvals</h3>
+            <div class="stat-value" th:text="${summary.pendingCount}">0</div>
+        </div>
+        <div class="card">
+            <h3>Ready to Disburse</h3>
+            <div class="stat-value" th:text="${summary.approvedCount}">0</div>
+        </div>
+        <div class="card">
+            <h3>Active Loans</h3>
+            <div class="stat-value" th:text="${summary.activeCount}">0</div>
+        </div>
+    </div>
+
+    <h2 style="margin-bottom: 0.75rem;">Pending Applications</h2>
+    <div class="table-wrap">
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Borrower</th>
+                <th>Principal</th>
+                <th>Tenure</th>
+                <th>EMI</th>
+                <th>Purpose</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="loan : ${pendingLoans}">
+                <td th:text="${loan.id}">1</td>
+                <td th:text="${loan.borrower.fullName}">Borrower</td>
+                <td th:text="${loan.principalAmount}">10000.00</td>
+                <td th:text="${loan.tenureMonths} + ' mo'">12 mo</td>
+                <td th:text="${loan.monthlyEmi}">881.49</td>
+                <td th:text="${loan.purpose}">Purpose</td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(pendingLoans)}">
+                <td colspan="6" style="text-align: center; color: #64748b;">No pending applications.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Error - Loan Management System</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<main class="container">
+    <div class="card" style="max-width: 540px; margin: 2rem auto;">
+        <h1 th:text="${statusCode} + ' - ' + ${errorTitle}">Error</h1>
+        <p style="margin: 0.75rem 0 1.25rem; color: #475569;" th:text="${errorMessage}">Something went wrong.</p>
+        <a th:href="@{/}" class="btn">Return Home</a>
+    </div>
+</main>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

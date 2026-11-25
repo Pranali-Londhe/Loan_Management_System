@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Borrower Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<main class="container">
+    <div class="page-header">
+        <div>
+            <h1>Welcome, <span th:text="${user.fullName}">Borrower</span></h1>
+            <p style="color: #64748b;">Overview of your loan applications and active repayments</p>
+        </div>
+        <a th:href="@{/borrower/apply}" class="btn">+ Apply for Loan</a>
+    </div>
+
+    <div class="grid-cards">
+        <div class="card">
+            <h3>Total Applications</h3>
+            <div class="stat-value" th:text="${totalLoans}">0</div>
+        </div>
+        <div class="card">
+            <h3>Pending Review</h3>
+            <div class="stat-value" th:text="${pendingLoans}">0</div>
+        </div>
+        <div class="card">
+            <h3>Active Loans</h3>
+            <div class="stat-value" th:text="${activeLoans}">0</div>
+        </div>
+        <div class="card">
+            <h3>Closed Loans</h3>
+            <div class="stat-value" th:text="${closedLoans}">0</div>
+        </div>
+    </div>
+
+    <h2 style="margin-bottom: 0.75rem;">Recent Loans</h2>
+    <div class="table-wrap">
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Principal</th>
+                <th>EMI</th>
+                <th>Remaining</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="loan : ${recentLoans}">
+                <td th:text="${loan.id}">1</td>
+                <td th:text="${loan.principalAmount}">10000.00</td>
+                <td th:text="${loan.monthlyEmi}">900.00</td>
+                <td th:text="${loan.remainingBalance}">10800.00</td>
+                <td>
+                    <span class="badge" th:classappend="'badge-' + ${loan.status}" th:text="${loan.status}">PENDING</span>
+                </td>
+                <td>
+                    <a th:href="@{/borrower/loans/{id}(id=${loan.id})}" class="btn btn-sm">Details</a>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(recentLoans)}">
+                <td colspan="6" style="text-align: center; color: #64748b;">No loans found yet.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

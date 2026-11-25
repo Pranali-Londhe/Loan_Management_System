@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Loans</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<main class="container">
+    <div class="page-header">
+        <h1>My Loans</h1>
+        <a th:href="@{/borrower/apply}" class="btn">+ New Application</a>
+    </div>
+
+    <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+
+    <div class="table-wrap">
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Purpose</th>
+                <th>Principal</th>
+                <th>Rate (%)</th>
+                <th>Tenure</th>
+                <th>Monthly EMI</th>
+                <th>Remaining</th>
+                <th>Status</th>
+                <th>Details</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="loan : ${loans}">
+                <td th:text="${loan.id}">1</td>
+                <td th:text="${loan.purpose}">Purpose</td>
+                <td th:text="${loan.principalAmount}">10000.00</td>
+                <td th:text="${loan.annualInterestRate}">10.50</td>
+                <td th:text="${loan.tenureMonths} + ' mo'">12 mo</td>
+                <td th:text="${loan.monthlyEmi}">881.49</td>
+                <td th:text="${loan.remainingBalance}">10577.88</td>
+                <td>
+                    <span class="badge" th:classappend="'badge-' + ${loan.status}" th:text="${loan.status}">PENDING</span>
+                </td>
+                <td>
+                    <a th:href="@{/borrower/loans/{id}(id=${loan.id})}" class="btn btn-sm">Open</a>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(loans)}">
+                <td colspan="9" style="text-align: center; color: #64748b;">You have not applied for any loans yet.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>
