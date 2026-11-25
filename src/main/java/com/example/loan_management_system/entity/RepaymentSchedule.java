@@ -1,20 +1,20 @@
 package com.example.loan_management_system.entity;
 
+import com.example.loan_management_system.enums.RepaymentStatus;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "repayment_schedules")
-public class RepaymentSchedule {
+@Table(name = "repayments")
+public class Repayment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "loan_id", nullable = false)
-    private Loan loan;
+    @Column(nullable = false)
+    private Long loanId;
 
     @Column(nullable = false)
     private Integer installmentNumber;
@@ -23,24 +23,22 @@ public class RepaymentSchedule {
     private LocalDate dueDate;
 
     @Column(nullable = false, precision = 12, scale = 2)
-    private BigDecimal installmentAmount;
+    private BigDecimal amountDue;
 
-    @Column(nullable = false, precision = 12, scale = 2)
-    private BigDecimal principalComponent;
+    @Column(precision = 12, scale = 2)
+    private BigDecimal amountPaid = BigDecimal.ZERO;
 
-    @Column(nullable = false, precision = 12, scale = 2)
-    private BigDecimal interestComponent;
-
-    @Column(nullable = false)
-    private boolean paid = false;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    private RepaymentStatus status = RepaymentStatus.PENDING;
 
     private LocalDate paidDate;
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
-    public Loan getLoan() { return loan; }
-    public void setLoan(Loan loan) { this.loan = loan; }
+    public Long getLoanId() { return loanId; }
+    public void setLoanId(Long loanId) { this.loanId = loanId; }
 
     public Integer getInstallmentNumber() { return installmentNumber; }
     public void setInstallmentNumber(Integer installmentNumber) { this.installmentNumber = installmentNumber; }
@@ -48,17 +46,14 @@ public class RepaymentSchedule {
     public LocalDate getDueDate() { return dueDate; }
     public void setDueDate(LocalDate dueDate) { this.dueDate = dueDate; }
 
-    public BigDecimal getInstallmentAmount() { return installmentAmount; }
-    public void setInstallmentAmount(BigDecimal installmentAmount) { this.installmentAmount = installmentAmount; }
+    public BigDecimal getAmountDue() { return amountDue; }
+    public void setAmountDue(BigDecimal amountDue) { this.amountDue = amountDue; }
 
-    public BigDecimal getPrincipalComponent() { return principalComponent; }
-    public void setPrincipalComponent(BigDecimal principalComponent) { this.principalComponent = principalComponent; }
+    public BigDecimal getAmountPaid() { return amountPaid; }
+    public void setAmountPaid(BigDecimal amountPaid) { this.amountPaid = amountPaid; }
 
-    public BigDecimal getInterestComponent() { return interestComponent; }
-    public void setInterestComponent(BigDecimal interestComponent) { this.interestComponent = interestComponent; }
-
-    public boolean isPaid() { return paid; }
-    public void setPaid(boolean paid) { this.paid = paid; }
+    public RepaymentStatus getStatus() { return status; }
+    public void setStatus(RepaymentStatus status) { this.status = status; }
 
     public LocalDate getPaidDate() { return paidDate; }
     public void setPaidDate(LocalDate paidDate) { this.paidDate = paidDate; }
