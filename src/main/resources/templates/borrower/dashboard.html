@@ -1,1 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Borrower Dashboard - Loan Management System</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+<main>
+    <h1>Borrower Dashboard</h1>
+    <p style="color: var(--mut); margin-bottom: 24px;">Welcome back! Manage your loans and check status easily.</p>
 
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-bottom: 24px;">
+        <div class="card">
+            <h3 style="color: var(--mut); font-size: 13px; text-transform: uppercase;">Quick Actions</h3>
+            <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 12px;">
+                <a th:href="@{/borrower/apply}" class="btn" style="text-align: center;">Apply for a New Loan</a>
+                <a th:href="@{/borrower/loans}" class="btn" style="text-align: center; background: transparent; border: 1px solid var(--line); color: var(--fg);">View My Loans</a>
+            </div>
+        </div>
+    </div>
+</main>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>
