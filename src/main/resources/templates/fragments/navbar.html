@@ -1,1 +1,17 @@
-
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<header th:fragment="navbar" style="border-bottom: 1px solid var(--line, #e6e6e1); background: var(--card, #fff); padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px;">
+    <div style="font-weight: 500; font-size: 16px;">
+        <a th:href="@{/}" style="color: var(--fg, #1a1a1a); text-decoration: none;"><strong>LoanManager</strong></a>
+    </div>
+    <nav style="display: flex; gap: 20px; align-items: center; font-size: 14px;">
+        <a th:href="@{/borrower/dashboard}" style="color: var(--mut, #74746f); text-decoration: none;">Dashboard</a>
+        <a th:href="@{/borrower/apply}" style="color: var(--mut, #74746f); text-decoration: none;">Apply</a>
+        <a th:href="@{/borrower/loans}" style="color: var(--mut, #74746f); text-decoration: none;">My Loans</a>
+        <a th:href="@{/admin/dashboard}" style="color: var(--mut, #74746f); text-decoration: none;">Admin</a>
+        <a th:href="@{/login}" style="color: var(--ac, #8a5a2b); text-decoration: none; font-weight: 500;">Login</a>
+    </nav>
+</header>
+</body>
+</html>
