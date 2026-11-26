@@ -1,1 +1,103 @@
+:root {
+    --bg: #fafaf8;
+    --fg: #1a1a1a;
+    --mut: #74746f;
+    --line: #e6e6e1;
+    --card: #fff;
+    --ac: #8a5a2b;
+}
 
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --bg: #141413;
+        --fg: #ececea;
+        --mut: #9a9a94;
+        --line: #2a2a28;
+        --card: #1b1b1a;
+        --ac: #d9a36a;
+    }
+}
+
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font: 15px/1.65 Inter, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px;
+}
+h1, h2, h3 {
+    font-weight: 500;
+    margin-top: 0;
+}
+.card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+th, td {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line);
+}
+th {
+    color: var(--mut);
+    font-weight: 500;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+}
+input, select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--bg);
+    color: var(--fg);
+    font-size: 14px;
+    margin-bottom: 12px;
+    box-sizing: border-box;
+}
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--ac);
+}
+button, .btn {
+    padding: 10px 16px;
+    background: var(--ac);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: none;
+    display: inline-block;
+}
+button:hover, .btn:hover {
+    opacity: 0.9;
+}
+.badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 99px;
+    font-size: 12px;
+    font-weight: 500;
+}
+.badge.PENDING { background: #fff8e1; color: #f57c00; }
+.badge.APPROVED, .badge.ACTIVE { background: #e1f5fe; color: #0288d1; }
+.badge.REJECTED { background: #ffebee; color: #c62828; }
+.badge.CLOSED, .badge.PAID { background: #e8f5e9; color: #2e7d32; }
+.badge.OVERDUE { background: #fbe9e7; color: #d84315; }
