@@ -1,1 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Loans - Loan Management System</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+<main>
+    <h1>My Loans</h1>
+    <p style="color: var(--mut); margin-bottom: 24px;">Track status and repayment schedules for your submitted applications.</p>
 
+    <div class="card">
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Amount</th>
+                <th>Tenure</th>
+                <th>EMI</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${loans == null || loans.empty}">
+                <td colspan="6" style="text-align: center; color: var(--mut);">No loan applications found.</td>
+            </tr>
+            <tr th:each="loan : ${loans}">
+                <td th:text="'#' + ${loan.id}">#1</td>
+                <td th:text="'$' + ${#numbers.formatDecimal(loan.amount, 0, 'COMMA', 2, 'POINT')}">$10,000.00</td>
+                <td th:text="${loan.tenureMonths} + ' mos'">12 mos</td>
+                <td th:text="${loan.emi != null ? '$' + #numbers.formatDecimal(loan.emi, 0, 'COMMA', 2, 'POINT') : 'Pending'}">$883.33</td>
+                <td>
+                    <span class="badge" th:classappend="${loan.status}" th:text="${loan.status}">APPROVED</span>
+                </td>
+                <td>
+                    <a th:href="@{/borrower/loans/{id}(id=${loan.id})}" class="btn" style="padding: 4px 10px; font-size: 12px;">Details</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html
