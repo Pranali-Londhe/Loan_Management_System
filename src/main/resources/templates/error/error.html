@@ -1,1 +1,19 @@
-
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Error - Loan Management System</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+<main style="text-align: center; padding-top: 60px;">
+    <div class="card" style="max-width: 500px; margin: 0 auto; padding: 40px;">
+        <h2 style="color: #c62828;">Something went wrong</h2>
+        <p style="color: var(--mut); font-size: 14px;" th:text="${message} ?: 'An unexpected error occurred. Please try again later.'">An unexpected error occurred.</p>
+        <a th:href="@{/}" class="btn" style="margin-top: 16px;">Return Home</a>
+    </div>
+</main>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>
